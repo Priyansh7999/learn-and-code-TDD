@@ -12,6 +12,12 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
     public Book createBook(String title, String author) {
+        if(title.isEmpty()){
+            throw new IllegalArgumentException("Title can not be empty");
+        }
+        if(author.isEmpty()){
+            throw new IllegalArgumentException("Author can not be empty");
+        }
         return bookRepository.save(new Book(title,author));
     }
 }

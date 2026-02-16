@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -36,5 +37,18 @@ public class BookServiceTest {
         assertEquals(book,addedBook);
         assertEquals(title,addedBook.getTitle());
         assertEquals(author,addedBook.getAuthor());
+    }
+
+    @Test
+    void shouldThrowException_WhenTitleIsEmpty(){
+        assertThrows(IllegalAccessError.class,()->{
+            bookService.createBook("","xyz");
+        });
+    }
+    @Test
+    void shouldThrowException_WhenAuthorIsEmpty(){
+        assertThrows(IllegalAccessError.class,()->{
+            bookService.createBook("xyz","");
+        });
     }
 }
