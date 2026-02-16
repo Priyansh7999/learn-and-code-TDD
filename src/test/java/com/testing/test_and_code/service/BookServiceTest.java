@@ -9,6 +9,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -37,5 +39,21 @@ public class BookServiceTest {
         assertEquals(book,addedBook);
         assertEquals(title,addedBook.getTitle());
         assertEquals(author,addedBook.getAuthor());
+    }
+
+    @Test
+    void ShouldReturnListOfBooks_WhenGetMethodIsCalled() {
+        //Given
+        Book book1=new Book("book1","xyz");
+        Book book2=new Book("book2","abc");
+        when(bookRepository.findAll()).thenReturn(List.of(book1,book2));
+
+        //When
+        List<Book> listOfBooks = bookService.getAllBooks();
+
+        //Then
+        assertEquals(2,listOfBooks.size());
+        assertEquals(book1,listOfBooks.get(0));
+        assertEquals(book2,listOfBooks.get(1));
     }
 }
