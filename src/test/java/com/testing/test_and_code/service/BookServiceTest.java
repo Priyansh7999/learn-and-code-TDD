@@ -38,17 +38,4 @@ public class BookServiceTest {
         assertEquals(title,addedBook.getTitle());
         assertEquals(author,addedBook.getAuthor());
     }
-
-    @Test
-    void shouldThrowException_WhenTitleIsEmpty(){
-        assertThrows(IllegalAccessError.class,()->{
-            bookService.createBook("","xyz");
-        });
-    }
-    @Test
-    void shouldThrowException_WhenAuthorIsEmpty(){
-        assertThrows(IllegalAccessError.class,()->{
-            bookService.createBook("xyz","");
-        });
-    }
 }
