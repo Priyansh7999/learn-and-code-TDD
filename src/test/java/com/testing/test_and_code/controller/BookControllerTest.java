@@ -45,6 +45,7 @@ public class BookControllerTest {
         String author = "qwertyuiopasdfghjklzxcvbnmqwertyuqwertyuiopasdfghjklzxcvbnmqwertyuqwertyuiopasdfghjklzxcvbnmqweqwertyuiopasdfghjklzxcvbnmqwertyuqwertyuiopasdfghjklzxcvbnmqwertyuqwertyuiopasdfghjklzxcvbnmqwe";
         CreateBookRequest request = new CreateBookRequest();
         request.setAuthor(author);
+        request.setTitle("abc");
         mockMvc.perform(MockMvcRequestBuilders.post("/books").contentType(MediaType.APPLICATION_JSON).content(
                         objectMapper.writeValueAsString(request))).andExpect(status().isBadRequest());
     }
@@ -54,6 +55,7 @@ public class BookControllerTest {
 
         CreateBookRequest request = new CreateBookRequest();
         request.setTitle(title);
+        request.setAuthor("xyz");
         mockMvc.perform(MockMvcRequestBuilders.post("/books").contentType(MediaType.APPLICATION_JSON).content(
                 objectMapper.writeValueAsString(request))).andExpect(status().isBadRequest());
     }
