@@ -1,5 +1,6 @@
 package com.testing.test_and_code.controller;
 
+import com.testing.test_and_code.dto.CreateBookRequest;
 import com.testing.test_and_code.model.Book;
 import com.testing.test_and_code.service.BookService;
 import org.junit.jupiter.api.Test;
@@ -37,5 +38,23 @@ public class BookControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.title").value("lost"))
                 .andExpect(jsonPath("$.author").value("xyz"));
+    }
+
+    @Test
+    void ShouldThrowException_WhenAuthorNameExceed100Characters() throws Exception {
+        String author = "qwertyuiopasdfghjklzxcvbnmqwertyuqwertyuiopasdfghjklzxcvbnmqwertyuqwertyuiopasdfghjklzxcvbnmqweqwertyuiopasdfghjklzxcvbnmqwertyuqwertyuiopasdfghjklzxcvbnmqwertyuqwertyuiopasdfghjklzxcvbnmqwe";
+        CreateBookRequest request = new CreateBookRequest();
+        request.setAuthor(author);
+        mockMvc.perform(MockMvcRequestBuilders.post("/books").contentType(MediaType.APPLICATION_JSON).content(
+                        objectMapper.writeValueAsString(request))).andExpect(status().isBadRequest());
+    }
+    @Test
+    void ShouldThrowException_WhenTitleExceed100Characters() throws Exception {
+        String title = "qwertyuiopasdfghjklzxcvbnmqwertyuqwertyuiopasdfghjklzxcvbnmqwertyuqwertyuiopasdfghjklzxcvbnmqwerqwertyuiopasdfghjklzxcvbnmqwertyuqwertyuiopasdfghjklzxcvbnmqwertyuqwertyuiopasdfghjklzxcvbnmqwe";
+
+        CreateBookRequest request = new CreateBookRequest();
+        request.setTitle(title);
+        mockMvc.perform(MockMvcRequestBuilders.post("/books").contentType(MediaType.APPLICATION_JSON).content(
+                objectMapper.writeValueAsString(request))).andExpect(status().isBadRequest());
     }
 }
